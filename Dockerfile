@@ -1,22 +1,31 @@
-# Etapa 1: Build con Gradle + Java 21
-FROM gradle:8.3-jdk-jammy AS builder
-USER gradle
-WORKDIR /home/gradle/src
+# ---------------------------
+# Stage 1: Build
+# ---------------------------
+FROM gradle:9.3-jdk21 AS build
 
-COPY --chown=gradle:gradle build.gradle settings.gradle ./
-RUN gradle --no-daemon build || true
-
-COPY --chown=gradle:gradle src ./src
-RUN gradle --no-daemon bootJar
-
-# Etapa 2: Runtime con solo JDK 21
-FROM eclipse-temurin:21-jdk-jammy
+# Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar el jar desde la etapa builder
-COPY --from=builder /app/build/libs/*.jar app.jar
+# Copiamos solo los archivos necesarios para Gradle (optimiza cache)
+COPY build.gradle settings.gradle gradle.properties ./
+COPY gradle ./gradle
+COPY src ./src
 
+# Build con Gradle (producción, sin tests)
+RUN gradle clean bootJar -x test -x check --no-daemon
+
+# ---------------------------
+# Stage 2: Runtime
+# ---------------------------
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+# Copiamos solo el jar generado en el stage anterior
+COPY --from=build /app/build/libs/*.jar app.jar
+
+# Exponemos el puerto que Railway asignará dinámicamente
 EXPOSE 8080
 
-# Ejecutar la aplicación
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/app.jar"]
+# Ejecutamos la app con el puerto dinámico de Railway
+CMD ["sh", "-c", "java -Dserver.port=$PORT -jar app.jar"]
