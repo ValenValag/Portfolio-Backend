@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Copiamos proyecto
-COPY . .
+COPY src/main/java/com/valenvalag/portfoliobackend .
 
 # Construimos jar
 RUN ./mvnw clean package -DskipTests
