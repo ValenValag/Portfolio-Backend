@@ -5,6 +5,5 @@ node_modules
 Dockerfile
 README.md
 build/
-.gradle/
 .idea/
 *.iml
