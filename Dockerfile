@@ -1,8 +1,8 @@
 # Etapa 1: Build
-FROM gradle:8.3-jdk21 AS builder
+FROM gradle:8.3-jdk-jammy AS builder
 WORKDIR /app
 
-# Copiamos solo archivos necesarios para cachear dependencias
+# Copiamos solo archivos de Gradle para cachear dependencias
 COPY build.gradle settings.gradle gradle.properties ./
 RUN gradle --no-daemon build || true
 
@@ -16,9 +16,7 @@ RUN gradle --no-daemon bootJar
 FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
 
-# Copiamos el jar desde la etapa "builder"
 COPY --from=builder /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
-
 CMD ["java", "-jar", "app.jar"]
