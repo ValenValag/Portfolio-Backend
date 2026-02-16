@@ -11,9 +11,4 @@ public class PortfolioBackendApplication {
         SpringApplication.run(PortfolioBackendApplication.class, args);
     }
 
-    @GetMapping("/")
-    public String mainPage(){
-        return "a";
-    }
-
 }
