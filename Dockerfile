@@ -7,7 +7,7 @@ FROM gradle:9.3-jdk21 AS build
 WORKDIR /app
 
 # Copiamos solo los archivos necesarios para Gradle (optimiza cache)
-COPY build.gradle settings.gradle gradle.properties ./
+COPY build.gradle settings.gradle ./
 COPY gradle ./gradle
 COPY src ./src
 
