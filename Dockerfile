@@ -3,7 +3,7 @@ FROM gradle:8.3-jdk-jammy AS builder
 WORKDIR /app
 
 # Copiar solo archivos de Gradle para cachear dependencias
-COPY build.gradle settings.gradle gradle.properties ./
+COPY build.gradle settings.gradle ./
 RUN gradle --no-daemon build || true
 
 # Copiar el código fuente
