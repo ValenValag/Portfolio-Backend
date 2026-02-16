@@ -13,7 +13,6 @@ COPY src ./src
 RUN gradle --no-daemon bootJar
 
 # Etapa 2: Imagen ligera con solo Java 21
-FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
 
 # Copiamos el jar generado
