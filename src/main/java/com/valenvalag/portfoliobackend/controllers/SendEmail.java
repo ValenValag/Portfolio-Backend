@@ -5,7 +5,6 @@ import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
 import com.valenvalag.portfoliobackend.models.Email;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ public class SendEmail {
 
 
     @PostMapping("/sendEmail")
-    public ResponseEntity<String> sendEmail(@NotNull @RequestBody Email email){
+    public ResponseEntity<String> sendEmail(@RequestBody Email email){
         Resend resend = new Resend(API_KEY);
 
         CreateEmailOptions params = CreateEmailOptions.builder()
