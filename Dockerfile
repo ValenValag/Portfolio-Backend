@@ -1,17 +1,9 @@
-# Imagen base Java
 FROM eclipse-temurin:21-jdk
 
-# Carpeta interna
 WORKDIR /app
 
-# Copiamos proyecto
-COPY src/main/java/com/valenvalag/portfoliobackend .
+COPY build/libs/*.jar app.jar
 
-# Construimos jar
-RUN ./mvnw clean package -DskipTests
+EXPOSE 8080
 
-# Railway usa puerto dinámico
-ENV PORT=8080
-
-# Ejecutamos app
-CMD ["sh", "-c", "java -Dserver.port=$PORT -jar target/*.jar"]
+CMD ["sh", "-c", "java -Dserver.port=$PORT -jar app.jar"]
