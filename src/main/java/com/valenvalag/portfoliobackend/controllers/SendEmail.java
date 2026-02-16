@@ -21,6 +21,9 @@ public class SendEmail {
 
     @PostMapping("/sendEmail")
     public ResponseEntity<String> sendEmail(@RequestBody Email email){
+
+        System.out.println("Enviar email recibido");
+
         CreateEmailOptions params = CreateEmailOptions.builder()
                 .from("Acme <onboarding@resend.dev>")
                 .to("val.agarcia08@gmail.com")
