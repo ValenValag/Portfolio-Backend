@@ -1,15 +1,12 @@
 # Etapa 1: Build con Gradle + Java 21
 FROM gradle:8.3-jdk-jammy AS builder
-WORKDIR /app
+USER gradle
+WORKDIR /home/gradle/src
 
-# Copiar solo archivos de Gradle para cachear dependencias
-COPY build.gradle settings.gradle ./
+COPY --chown=gradle:gradle build.gradle settings.gradle ./
 RUN gradle --no-daemon build || true
 
-# Copiar el código fuente
-COPY src ./src
-
-# Construir el jar final
+COPY --chown=gradle:gradle src ./src
 RUN gradle --no-daemon bootJar
 
 # Etapa 2: Runtime con solo JDK 21
