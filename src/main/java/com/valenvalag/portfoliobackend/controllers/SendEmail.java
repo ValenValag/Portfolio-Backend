@@ -27,7 +27,7 @@ public class SendEmail {
         System.out.println(API_KEY);
 
         CreateEmailOptions params = CreateEmailOptions.builder()
-                .from("Acme <onboarding@resend.dev>")
+                .from("onboarding@resend.dev")
                 .to("val.agarcia08@gmail.com")
                 .subject(email.subject)
                 .text(email.message)
