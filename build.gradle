@@ -5,8 +5,8 @@ plugins {
 }
 
 group = 'com.valenvalag'
-version = '0.0.1-SNAPSHOT'
-description = 'PortfolioBackend'
+version = '1.0.0'
+description = 'Backend del portfolio personal de Valentín Álvarez García (valentinalvarez.vercel.app)'
 
 java {
     toolchain {

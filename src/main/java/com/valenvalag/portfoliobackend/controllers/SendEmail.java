@@ -18,6 +18,8 @@ public class SendEmail {
     @Value("${API_KEY}")
     private String API_KEY;
 
+    @Value("${DEST_EMAIL}")
+    private String destEmail;
 
     @PostMapping("/sendEmail")
     public ResponseEntity<String> sendEmail(@RequestBody Email email){
@@ -25,7 +27,7 @@ public class SendEmail {
 
         CreateEmailOptions params = CreateEmailOptions.builder()
                 .from("onboarding@resend.dev")
-                .to("val.agarcia08@gmail.com")
+                .to(destEmail != null ? destEmail : "val.agarcia08@gmail.com")
                 .subject(email.subject)
                 .text(email.message)
                 .build();
