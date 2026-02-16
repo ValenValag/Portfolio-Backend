@@ -5,6 +5,7 @@ import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
 import com.valenvalag.portfoliobackend.models.Email;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +16,9 @@ import java.util.Properties;
 @RestController
 public class SendEmail {
 
-    Properties prop = new Properties();
-    Resend resend = new Resend(prop.getProperty("resend.apikey"));
+    @Value("${API_KEY}")
+    private String API_KEY;
+    Resend resend = new Resend(API_KEY);
 
 
     @PostMapping("/sendEmail")
