@@ -6,10 +6,13 @@ import com.resend.services.emails.model.CreateEmailOptions;
 import com.resend.services.emails.model.CreateEmailResponse;
 import com.valenvalag.portfoliobackend.models.Email;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 
 @RestController
@@ -21,26 +24,30 @@ public class SendEmail {
     @Value("${DEST_EMAIL}")
     private String destEmail;
 
+    Resend resend = new Resend(API_KEY);
+
     @PostMapping("/send-email")
-    public ResponseEntity<String> sendEmail(@RequestBody Email email){
-        Resend resend = new Resend(API_KEY);
+    public ResponseEntity<?> sendEmail(@RequestBody Email email) {
+
+        if (email.getSubject() == null || email.getMessage() == null) {
+            return ResponseEntity.badRequest().body(Map.of("ok", false));
+        }
+
 
         CreateEmailOptions params = CreateEmailOptions.builder()
                 .from("onboarding@resend.dev")
                 .to(destEmail != null ? destEmail : "val.agarcia08@gmail.com")
-                .subject(email.subject)
-                .text(email.message)
+                .subject(email.getSubject())
+                .text(email.getMessage())
                 .build();
 
         try {
             CreateEmailResponse data = resend.emails().send(params);
             System.out.println(data.getId());
-            return ResponseEntity.ok().body("ok");
-
+            return ResponseEntity.ok(Map.of("ok", true));
         } catch (ResendException e) {
-            return ResponseEntity.badRequest().body(e.toString());
+            return ResponseEntity.badRequest().body(Map.of("ok", false));
         }
-
     }
 
 }
