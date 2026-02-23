@@ -30,7 +30,7 @@ public class SendEmail {
     public ResponseEntity<?> sendEmail(@RequestBody Email email) {
 
         if (email.getSubject() == null || email.getMessage() == null) {
-            return ResponseEntity.badRequest().body(Map.of("ok", false));
+            return ResponseEntity.badRequest().body(Map.of("ok", false, "msg", "no subject or no message included"));
         }
 
         CreateEmailOptions params = CreateEmailOptions.builder()
@@ -45,7 +45,7 @@ public class SendEmail {
             System.out.println(data.getId());
             return ResponseEntity.ok(Map.of("ok", true));
         } catch (ResendException e) {
-            return ResponseEntity.badRequest().body(Map.of("ok", false));
+            return ResponseEntity.badRequest().body(Map.of("ok", false, "msg", e.toString()));
         }
     }
 
