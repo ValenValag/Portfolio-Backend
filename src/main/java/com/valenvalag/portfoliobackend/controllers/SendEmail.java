@@ -24,10 +24,11 @@ public class SendEmail {
     @Value("${DEST_EMAIL}")
     private String destEmail;
 
-    Resend resend = new Resend(API_KEY);
 
     @PostMapping("/send-email")
     public ResponseEntity<?> sendEmail(@RequestBody Email email) {
+
+        Resend resend = new Resend(API_KEY);
 
         if (email.getSubject() == null || email.getMessage() == null) {
             return ResponseEntity.badRequest().body(Map.of("ok", false, "msg", "no subject or no message included"));
