@@ -33,7 +33,6 @@ public class SendEmail {
             return ResponseEntity.badRequest().body(Map.of("ok", false));
         }
 
-
         CreateEmailOptions params = CreateEmailOptions.builder()
                 .from("onboarding@resend.dev")
                 .to(destEmail != null ? destEmail : "val.agarcia08@gmail.com")
