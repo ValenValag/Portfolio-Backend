@@ -21,7 +21,7 @@ public class SendEmail {
     @Value("${DEST_EMAIL}")
     private String destEmail;
 
-    @PostMapping("/sendEmail")
+    @PostMapping("/send-email")
     public ResponseEntity<String> sendEmail(@RequestBody Email email){
         Resend resend = new Resend(API_KEY);
 
