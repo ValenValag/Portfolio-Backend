@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 public class SendEmail {
 
-    @Value("${API_KEY}")
+    @Value("${RESEND_API_KEY}")
     private String API_KEY;
 
     @Value("${DEST_EMAIL}")
