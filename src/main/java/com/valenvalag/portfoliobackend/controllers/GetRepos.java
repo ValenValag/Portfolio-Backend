@@ -43,10 +43,6 @@ public class GetRepos {
                 mapper.getTypeFactory().constructCollectionType(List.class, Repository.class)
         );
 
-        for (Repository repo : repos) {
-            System.out.println(repo.getName());
-        }
-
         return ResponseEntity.ok(repos);
     }
 
