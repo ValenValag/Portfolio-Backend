@@ -56,6 +56,14 @@ src
 
 ---
 
+## Endpoints
+| Method | Endpoint | Description |
+|------|------|------|
+| GET | `/repositories` | Gets all personal projects that I have public in GitHub |
+| POST | `/send-email` | Submit a contact message |
+
+---
+
 ## Author
 
 **Valen Valag**
