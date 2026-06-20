@@ -74,7 +74,7 @@ header {
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 20px #9b00ff33;
-  padding: 16px 0;
+  padding: 20px 0;
 }
 
 .header-content {
