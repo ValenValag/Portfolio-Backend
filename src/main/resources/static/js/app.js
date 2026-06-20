@@ -1,4 +1,4 @@
-const API_BASE = 'http://' + window.location.hostname + ':8080';
+const API_BASE = 'https://valentinportfolio.up.railway.app';
 
 const els = {
   statusDot: document.getElementById('statusDot'),
