@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PortfolioBackend - API Monitor</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container header-content">
+      <div>
+        <h1>PortfolioBackend</h1>
+        <p class="subtitle">API Monitoring Dashboard</p>
+      </div>
+      <div class="status-badge" id="serverStatus">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Checking...</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- API Info -->
+    <section class="card" id="apiInfo">
+      <div class="card-header">
+        <h2>API Overview</h2>
+        <span class="badge">v1.0.0</span>
+      </div>
+      <p class="card-desc">Base URL: <code id="baseUrl"></code></p>
+      <div class="endpoints-grid">
+        <div class="endpoint-card">
+          <div class="endpoint-method get">GET</div>
+          <div class="endpoint-details">
+            <code class="endpoint-path">/repositories</code>
+            <span class="endpoint-desc">Fetch public GitHub repositories</span>
+          </div>
+          <div class="endpoint-status" id="epReposStatus">
+            <span class="status-dot" id="epReposDot"></span>
+          </div>
+        </div>
+        <div class="endpoint-card">
+          <div class="endpoint-method post">POST</div>
+          <div class="endpoint-details">
+            <code class="endpoint-path">/send-email</code>
+            <span class="endpoint-desc">Submit a contact message</span>
+          </div>
+          <div class="endpoint-status" id="epEmailStatus">
+            <span class="status-dot" id="epEmailDot"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Repositories Monitor -->
+    <section class="card" id="reposSection">
+      <div class="card-header">
+        <h2>Repositories Monitor</h2>
+        <div class="card-actions">
+          <span class="repo-count" id="repoCount">0 repos</span>
+          <button class="btn btn-sm" id="refreshRepos" onclick="fetchRepositories()">Refresh</button>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Language</th>
+              <th>Created</th>
+              <th>Updated</th>
+              <th>Description</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody id="reposTableBody">
+            <tr>
+              <td colspan="6" class="loading-msg">Loading repositories...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Email Tester -->
+    <section class="card" id="emailSection">
+      <div class="card-header">
+        <h2>Email Tester</h2>
+        <span class="badge">POST /send-email</span>
+      </div>
+      <p class="card-desc">Test the contact form endpoint by sending a test email.</p>
+      <form id="emailForm" onsubmit="sendTestEmail(event)">
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="Test email subject" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" placeholder="Write your test message..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="sendBtn">Send Test Email</button>
+      </form>
+      <div id="emailResult" class="result-box hidden"></div>
+    </section>
+
+    <!-- API Metadata -->
+    <section class="card" id="metadata">
+      <div class="card-header">
+        <h2>API Details</h2>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Server</span>
+          <span class="meta-value" id="metaServer">-</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Response Time</span>
+          <span class="meta-value" id="metaResponseTime">-</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Status</span>
+          <span class="meta-value" id="metaStatus">-</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Last Check</span>
+          <span class="meta-value" id="metaLastCheck">-</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Request Log -->
+    <section class="card" id="logSection">
+      <div class="card-header">
+        <h2>Request Log</h2>
+        <button class="btn btn-sm" onclick="clearLog()">Clear</button>
+      </div>
+      <div class="log-container" id="logContainer">
+        <p class="log-empty">No requests yet.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p>PortfolioBackend by <a href="https://github.com/ValenValag" target="_blank">Valen Valag</a></p>
+      <p><a href="https://valentinalvarez.vercel.app/en" target="_blank">valentinalvarez.vercel.app</a></p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
